@@ -6,7 +6,7 @@ Demonstrates that self-attention can capture long-range dependencies present in 
 The model weights and training pipeline are made public.
 
 TODO:
-   - scale loss similar to Pandey et. al. (https://www.cell.com/patterns/pdf/S2666-3899(23)00160-5.pdf)
+   - scale loss similar to Pandey et al. (https://www.cell.com/patterns/pdf/S2666-3899(23)00160-5.pdf)
    - modeling prediction error/confidence
 
 Sources:
