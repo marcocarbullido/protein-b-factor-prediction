@@ -60,7 +60,7 @@ all_y = np.load('y_61046.npy', allow_pickle=True)
 x_all = [np.delete(arr, -1, axis=1) for arr in all_x]
 input_vectors = np.array(x_all)
 label_vectors = np.squeeze(np.array(all_y))
-train_input_vectors, val_input_vectors, train_label_vectors, val_label_vectors = train_test_split(input_vectors, label_vectors, test_size=0.02, random_state=42)
+train_input_vectors, val_input_vectors, train_label_vectors, val_label_vectors = train_test_split(input_vectors, label_vectors, test_size=0.1, random_state=42)
 
 x_encoded_path = 'x_encoded.npy'
 x_val_encoded_path = 'x_val_encoded.npy'
