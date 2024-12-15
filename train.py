@@ -33,13 +33,6 @@ class TransformerBlock(tf.keras.layers.Layer):
 
         return out2
 
-class PositionalEmbedding(tf.keras.layers.Layer):
-    def __init__(self, sequence_length, d_model, **kwargs):
-        super(PositionalEmbedding, self).__init__(**kwargs)
-        self.position_embeddings = tf.keras.layers.Embedding(
-            input_dim=sequence_length, output_dim=d_model
-        )
-
     def call(self, inputs):
         seq_len = tf.shape(inputs)[1]
         positions = tf.range(start=0, limit=seq_len, delta=1)
@@ -47,19 +40,10 @@ class PositionalEmbedding(tf.keras.layers.Layer):
         sum = inputs + position_embeddings
         return inputs + position_embeddings
 
-    def get_config(self):
-        config = super(PositionalEmbedding, self).get_config()
-        config.update({
-            "sequence_length": self.position_embeddings.input_dim,
-            "d_model": self.position_embeddings.output_dim,
-        })
-        return config
-
 def build_model(input_shape, num_heads, key_dim, ff_dim, num_transformer_blocks, dropout_rate=0.1):
     inputs = tf.keras.Input(shape=input_shape)
     x = tf.keras.layers.Masking(mask_value=0)(inputs)
     x = tf.keras.layers.Dense(key_dim)(x)
-    x = PositionalEmbedding(input_shape[0], key_dim)(x)
     for _ in range(num_transformer_blocks):
         x = TransformerBlock(num_heads=num_heads, key_dim=key_dim, ff_dim=ff_dim, dropout_rate=dropout_rate)(x)
     x = tf.keras.layers.LayerNormalization(epsilon=1e-6)(x)
@@ -71,10 +55,9 @@ def build_model(input_shape, num_heads, key_dim, ff_dim, num_transformer_blocks,
     model = tf.keras.Model(inputs, outputs)
     return model
 
-
 all_x = np.load('x_61046.npy', allow_pickle=True)
 all_y = np.load('y_61046.npy', allow_pickle=True)
-x_all = [np.delete(arr, -1, axis=1) for arr in all_x] # removing length feature
+x_all = [np.delete(arr, -1, axis=1) for arr in all_x]
 input_vectors = np.array(x_all)
 label_vectors = np.squeeze(np.array(all_y))
 train_input_vectors, val_input_vectors, train_label_vectors, val_label_vectors = train_test_split(input_vectors, label_vectors, test_size=0.02, random_state=42)
