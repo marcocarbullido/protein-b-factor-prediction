@@ -1,7 +1,7 @@
 # rcsb-bfactor-transformer
 Deep learning approach for predicting protein b-factors from sequence
 
-Demonstrates that self-attention can capture long-range dependencies present in protein sequences. This  transformer architecture and protein embeddings, this approach exceeds the performance of state-of-the-art models, reaching an average Pearson correlation coefficient of 0.822, compared to 0.799 (Pandey et al.), amid requiring far fewer parameters.
+Demonstrates implementation of transformer architecture for learning protein embeddings and predicting b-factors, achieving state-of-the-art performance. On predicting protein b-factors, this approach reaches an average Pearson correlation coefficient of 0.82, compared to 0.80 (Pandey et al.), while requiring fewer parameters.
 
 The model weights and training pipeline are made public.
 
